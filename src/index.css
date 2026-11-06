@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* CRT Monitor Glow Filter */
+  .crt-active {
+    text-shadow: 0 0 1px rgba(74, 222, 128, 0.4);
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #090d16;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+}
+
+@keyframes circuitFlow {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    stroke-dashoffset: -200;
+    opacity: 0.2;
+  }
+}
+
+/* Inverted breathing rhythm: out of phase with standard animate-pulse */
+@keyframes pulseOpposite {
+  0%, 100% {
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+.animate-pulse-opposite {
+  animation: pulseOpposite 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Forward traveling wave for laser trajectory dots: sequentially lighting up forward */
+@keyframes trajectoryFlow {
+  0% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(0.8);
+    filter: drop-shadow(0 0 1px rgba(244, 114, 182, 0.4));
+  }
+  30% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.35);
+    filter: drop-shadow(0 0 4px rgba(244, 114, 182, 1));
+  }
+  60%, 100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(0.8);
+    filter: drop-shadow(0 0 1px rgba(244, 114, 182, 0.4));
+  }
+}
+
+.animate-trajectory-flow {
+  animation: trajectoryFlow 1s ease-in-out infinite both;
+}
+
+/* Visual swipe gesture release burst */
+@keyframes swipeBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.65);
+  }
+  60% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.7);
+  }
+}
+
+.animate-swipe-burst {
+  animation: swipeBurst 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
