@@ -34,6 +34,7 @@ export interface WormholePair {
 
 export interface LevelData {
   id: number;
+  fabIndex?: number;
   chapter: number;
   chapterName: string;
   title: string;

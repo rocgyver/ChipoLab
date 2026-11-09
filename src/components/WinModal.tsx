@@ -78,7 +78,7 @@ export const WinModal: React.FC<WinModalProps> = ({
         </div>
 
         <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight mb-1">
-          {isGrandFinale ? '超級電腦成功組裝！' : `${level.id === 0 ? 'Fab.0' : `Lab.${level.id}`} 通關完畢`}
+          {isGrandFinale ? '超級電腦成功組裝！' : `${level.chapter === 0 ? `Fab.${level.fabIndex ?? level.id}` : `Lab.${level.id}`} 通關完畢`}
         </h3>
 
         <p className="text-xs text-slate-400 max-w-xs mb-4">

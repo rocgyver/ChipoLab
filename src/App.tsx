@@ -52,6 +52,9 @@ function resolveDeviceLevel(lvl: LevelData, isMobile: boolean): LevelData {
   return lvl;
 }
 
+// Default starting level for new players: Lab.15 (486 DX2 Revolution)
+const DEFAULT_INITIAL_LEVEL: LevelData = LEVELS.find((l) => l.id === 15) || LEVELS[15] || LEVELS[0];
+
 export default function App() {
   const [isMobileScreen, setIsMobileScreen] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth < 768 : false
@@ -66,10 +69,10 @@ export default function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Current active level
+  // Current active level (Default to Lab.15)
   const [currentLevel, setCurrentLevel] = useState<LevelData>(() => {
     const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
-    return resolveDeviceLevel(LEVELS[0], isMobile);
+    return resolveDeviceLevel(DEFAULT_INITIAL_LEVEL, isMobile);
   });
   const [lastCustomLevel, setLastCustomLevel] = useState<LevelData | null>(null);
 
@@ -77,23 +80,28 @@ export default function App() {
   const isWraparound = isLevelWraparound(currentLevel);
   const effectiveGrid = useMemo(() => getEffectiveGrid(currentLevel), [currentLevel]);
 
-  // Player position & state
-  const [playerPos, setPlayerPos] = useState<Position>(LEVELS[0].playerStart);
+  // Player position & state (Default to Lab.15 playerStart)
+  const [playerPos, setPlayerPos] = useState<Position>(() => {
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    return resolveDeviceLevel(DEFAULT_INITIAL_LEVEL, isMobile).playerStart;
+  });
   const [playerDir, setPlayerDir] = useState<Direction>('DOWN');
   const [isPushing, setIsPushing] = useState<boolean>(false);
   const [isWalking, setIsWalking] = useState<boolean>(false);
   const [isVictory, setIsVictory] = useState<boolean>(false);
   const [isPlayerNoTransition, setIsPlayerNoTransition] = useState<boolean>(false);
 
-  // Chips on the board
-  const [chips, setChips] = useState<Chip[]>(() =>
-    LEVELS[0].chips.map((c, i) => ({
+  // Chips on the board (Default to Lab.15 chips)
+  const [chips, setChips] = useState<Chip[]>(() => {
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    const resolved = resolveDeviceLevel(DEFAULT_INITIAL_LEVEL, isMobile);
+    return resolved.chips.map((c, i) => ({
       id: `chip-${i}-${c.x}-${c.y}`,
       x: c.x,
       y: c.y,
       level: c.level,
-    }))
-  );
+    }));
+  });
 
   // Moves & Undo history
   const [moves, setMoves] = useState<number>(0);
@@ -116,7 +124,7 @@ export default function App() {
   const [isTimedMode, setIsTimedMode] = useState<boolean>(() => {
     return localStorage.getItem('lab_game_timed_mode') === 'true';
   });
-  const [timeLeft, setTimeLeft] = useState<number>(() => getLevelTimeLimit(LEVELS[0]));
+  const [timeLeft, setTimeLeft] = useState<number>(() => getLevelTimeLimit(DEFAULT_INITIAL_LEVEL));
   const [isTimeOver, setIsTimeOver] = useState<boolean>(false);
   const [isKnockedOut, setIsKnockedOut] = useState<boolean>(false);
   const [catchMessage, setCatchMessage] = useState<string | null>(null);
@@ -177,6 +185,7 @@ export default function App() {
   // Animation lock to prevent double presses during push slide
   const isBusyRef = useRef(false);
   const autoPlayAbortRef = useRef(false);
+  const isAutoPlayingRef = useRef(false);
 
   // Load level helper
   const loadLevel = useCallback((lvl: LevelData) => {
@@ -492,7 +501,7 @@ export default function App() {
               }
 
               // Check if Einstein is standing on this tile and caught off-guard
-              if (curP.x === stepTile.x && curP.y === stepTile.y) {
+              if (!isAutoPlayingRef.current && curP.x === stepTile.x && curP.y === stepTile.y) {
                 if (curD !== oppositeDir[slideDir]) {
                   // EINSTEIN CAUGHT OFF-GUARD ON THE TRACK: KNOCKOUT!
                   stopAndSnapChip(stepTile.x, stepTile.y);
@@ -780,6 +789,7 @@ export default function App() {
   const handleAutoPlaySolution = useCallback(async () => {
     if (!currentLevel.solutionSteps || currentLevel.solutionSteps.length === 0) return;
     autoPlayAbortRef.current = false;
+    isAutoPlayingRef.current = true;
     setIsAutoPlaying(true);
     setHintMessage('正在自動演示最佳解法...');
 
@@ -788,34 +798,98 @@ export default function App() {
     loadLevel(baseLvl);
     await new Promise((r) => setTimeout(r, 350));
 
-    for (let i = 0; i < currentLevel.solutionSteps.length; i++) {
-      if (autoPlayAbortRef.current) break;
-      const step = currentLevel.solutionSteps[i];
+    try {
+      for (let i = 0; i < currentLevel.solutionSteps.length; i++) {
+        if (autoPlayAbortRef.current) break;
+        const step = currentLevel.solutionSteps[i];
 
-      // Move player to stand position
-      setPlayerPos({ x: step.standX, y: step.standY });
-      playerPosRef.current = { x: step.standX, y: step.standY };
-      setPlayerDir(step.dir);
-      playerDirRef.current = step.dir;
-      sounds.playStep();
-      await new Promise((r) => setTimeout(r, 260));
+        // Move player to stand position
+        setPlayerPos({ x: step.standX, y: step.standY });
+        playerPosRef.current = { x: step.standX, y: step.standY };
+        setPlayerDir(step.dir);
+        playerDirRef.current = step.dir;
+        sounds.playStep();
+        await new Promise((r) => setTimeout(r, 260));
 
-      if (autoPlayAbortRef.current) break;
+        if (autoPlayAbortRef.current) break;
 
-      // Push!
-      handleMove(step.dir);
+        // Check whether the pushed chip will loop back through the stand tile
+        const { dx, dy } = getDirectionDelta(step.dir);
+        const w = currentLevel.width;
+        const h = currentLevel.height;
+        const chipTargetX = isWraparound ? ((step.standX + dx) % w + w) % w : step.standX + dx;
+        const chipTargetY = isWraparound ? ((step.standY + dy) % h + h) % h : step.standY + dy;
+        const frontChip = chipsRef.current.find((c) => c.x === chipTargetX && c.y === chipTargetY);
 
-      // Wait for any sliding animation to finish
-      let waitTicks = 0;
-      while (slidingChipIdRef.current !== null && waitTicks < 50) {
-        await new Promise((r) => setTimeout(r, 60));
-        waitTicks++;
+        let dodgeTile: Position | null = null;
+        let dodgeFaceDir: Direction = step.dir;
+
+        if (frontChip) {
+          const pushPlan = calculatePush(
+            effectiveGrid,
+            chipsRef.current,
+            frontChip,
+            step.dir,
+            isWraparound,
+            currentLevel.wormholes
+          );
+
+          if (
+            pushPlan.traveledPath &&
+            pushPlan.traveledPath.slice(1).some((p) => p.x === step.standX && p.y === step.standY)
+          ) {
+            // Trajectory loops back through Einstein's standing tile!
+            // Proactively dodge to an adjacent safe walkable tile
+            const perpDirs: Direction[] =
+              step.dir === 'UP' || step.dir === 'DOWN'
+                ? ['LEFT', 'RIGHT', 'DOWN', 'UP']
+                : ['UP', 'DOWN', 'LEFT', 'RIGHT'];
+
+            for (const d of perpDirs) {
+              const delta = getDirectionDelta(d);
+              const candX = isWraparound ? ((step.standX + delta.dx) % w + w) % w : step.standX + delta.dx;
+              const candY = isWraparound ? ((step.standY + delta.dy) % h + h) % h : step.standY + delta.dy;
+
+              if (
+                isWalkable(effectiveGrid, candX, candY, chipsRef.current, isWraparound) &&
+                !pushPlan.traveledPath.some((p) => p.x === candX && p.y === candY)
+              ) {
+                dodgeTile = { x: candX, y: candY };
+                dodgeFaceDir = d === 'LEFT' ? 'RIGHT' : d === 'RIGHT' ? 'LEFT' : d === 'UP' ? 'DOWN' : 'UP';
+                break;
+              }
+            }
+          }
+        }
+
+        // Push!
+        handleMove(step.dir);
+
+        // If the chip loops back through this tile, immediately dodge to the side!
+        if (dodgeTile) {
+          await new Promise((r) => setTimeout(r, 160));
+          if (!autoPlayAbortRef.current) {
+            setPlayerPos(dodgeTile);
+            playerPosRef.current = { ...dodgeTile };
+            setPlayerDir(dodgeFaceDir);
+            playerDirRef.current = dodgeFaceDir;
+            sounds.playStep();
+          }
+        }
+
+        // Wait for any sliding animation to finish
+        let waitTicks = 0;
+        while (slidingChipIdRef.current !== null && waitTicks < 50) {
+          await new Promise((r) => setTimeout(r, 60));
+          waitTicks++;
+        }
+        await new Promise((r) => setTimeout(r, 350));
       }
-      await new Promise((r) => setTimeout(r, 350));
+    } finally {
+      isAutoPlayingRef.current = false;
+      setIsAutoPlaying(false);
     }
-
-    setIsAutoPlaying(false);
-  }, [currentLevel, handleMove, loadLevel]);
+  }, [currentLevel, effectiveGrid, handleMove, isWraparound, loadLevel]);
 
   // Click on tile (Pathfinding to walk or direct push)
   const handleTileClick = useCallback(

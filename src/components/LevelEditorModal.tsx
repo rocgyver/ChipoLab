@@ -595,7 +595,15 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
             wormholes
           );
 
-          if (pushSim.merged && pushSim.targetChipId === 'target-a') {
+          // 新生成的晶片可以緊鄰蟲洞，但絕不要覆蓋在蟲洞上
+          const isTargetOnWormhole = wormholes.some(
+            (w) => (w.a.x === currX && w.a.y === currY) || (w.b.x === currX && w.b.y === currY)
+          );
+          const isPushOnWormhole = wormholes.some(
+            (w) => (w.a.x === pushX && w.a.y === pushY) || (w.b.x === pushX && w.b.y === pushY)
+          );
+
+          if (!isTargetOnWormhole && !isPushOnWormhole && pushSim.merged && pushSim.targetChipId === 'target-a') {
             candidates.push({
               n: stepCount,
               targetPos: { x: currX, y: currY },
@@ -891,8 +899,16 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
     [fissionMenu, grid, wormholes, width, height, wraparound, pickBestFissionCandidate, recordHistory]
   );
 
-  // Auto Layout implementation
-  // 1. 隨機在棋盤空白處放置一顆最高級(超級電腦，level 8)晶片，然後依據 Rule 1 & Rule 2 裂變成兩顆次級晶片。
+  // Open Auto Layout Dialog
+  const handleOpenAutoLayoutDialog = useCallback(() => {
+    // 讓玩家輸入晶片總數的頁面，不需要加上預先放置的晶片數量，保持常規設定
+    setAutoChipsCount((prev) => (prev >= 4 ? prev : 12));
+    setIsAutoLayoutDialogOpen(true);
+  }, []);
+
+  // Auto Layout algorithm:
+  // 1. 若棋盤已有預先佈置晶片，跳過放置超級電腦的步驟，直接以此晶片格局為基礎接續進行定向物理裂變。
+  //    若棋盤尚無晶片，則隨機在開闊空白處放置一顆超級電腦 (level 8) 晶片後裂變。
   // 2. 選擇「往某個方向前進，遇到的第一個已存在物件最遠」的方向裂變 (Rule 1)。
   // 3. 決定B晶片位移值(n)時，優先滿足「不緊鄰現有物件」，並最大化全盤分散度 (Rule 2 & Dispersion)。
   // 4. 重複前項動作，直到晶片數量大於等於 K 為止，並從多次推演中選取全盤最平均分佈的格局。
@@ -911,6 +927,20 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
       if (emptySpots.length < 2) {
         showToast('⚠️ 棋盤可用開放空間過小，無法進行自動裂變佈局！');
         return;
+      }
+
+      const hasPreplacedChips = editorChips.length > 0;
+
+      if (hasPreplacedChips) {
+        if (targetK <= editorChips.length) {
+          showToast(`⚠️ 棋盤上現有晶片數（${editorChips.length} 顆）已達到或超過設定的數量（${targetK} 顆）！請設定大於 ${editorChips.length} 顆以繼續加晶片。`);
+          return;
+        }
+        const hasFissionable = editorChips.some((c) => c.level > 1);
+        if (!hasFissionable) {
+          showToast('⚠️ 棋盤上的預佈置晶片等級皆為 1，無法再進行裂變！請先將部分晶片等級設為 2 以上。');
+          return;
+        }
       }
 
       interface FissionRecord {
@@ -932,7 +962,7 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
       let bestFissionHistory: FissionRecord[] = [];
       let bestDispersionScore = -Infinity;
 
-      // Score empty spots by open space in 4 directions so the initial Supercomputer starts in a spacious location
+      // Score empty spots by open space in 4 directions so the initial Supercomputer starts in a spacious location (for empty board mode)
       const scoredEmptySpots = emptySpots.map((spot) => {
         let totalObstacleDist = 0;
         let openDirs = 0;
@@ -949,55 +979,60 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
       // Multiple random restart attempts (16 attempts) to find the globally most evenly distributed layout
       for (let attempt = 0; attempt < 16; attempt++) {
         const attemptFissionHistory: FissionRecord[] = [];
-
-        // Step 1: 放置一顆超級電腦 (level 8) 晶片，並向第一障礙最遠的方向裂變 (Rule 1 & Rule 2)
-        const startSpot = topEmptySpots[attempt % topEmptySpots.length].spot;
-        let initialFissionSuccess = false;
         let workingChips: { x: number; y: number; level: number }[] = [];
 
-        const testChip = { x: startSpot.x, y: startSpot.y, level: 8 };
-        const initialOptions = calculateFissionOptions(testChip, [testChip]);
-        const validDirs = (['UP', 'DOWN', 'LEFT', 'RIGHT'] as Direction[]).filter(
-          (d) => initialOptions[d] && initialOptions[d].length > 0
-        );
+        if (hasPreplacedChips) {
+          // Pre-placed chips mode: skip placing supercomputer, start directly from current chips
+          workingChips = editorChips.map((c) => ({ x: c.x, y: c.y, level: c.level }));
+        } else {
+          // Clean layout mode: Step 1: 放置一顆超級電腦 (level 8) 晶片，並向第一障礙最遠的方向裂變 (Rule 1 & Rule 2)
+          const startSpot = topEmptySpots[attempt % topEmptySpots.length].spot;
+          let initialFissionSuccess = false;
 
-        if (validDirs.length > 0) {
-          // Rule 1: Find direction where distance to first object is furthest
-          const dirDists = validDirs.map((d) => ({
-            dir: d,
-            dist: getDistanceToFirstObstacle(startSpot, d, [startSpot], grid, wraparound, width, height, wormholes),
-          }));
-          dirDists.sort((a, b) => b.dist - a.dist);
-          const maxDist = dirDists[0].dist;
-          const bestDirs = dirDists.filter((d) => d.dist === maxDist).map((d) => d.dir);
-          const chosenDir = bestDirs[Math.floor(Math.random() * bestDirs.length)];
-
-          // Rule 2: In chosen direction, pick candidate that avoids adjacent objects
-          const chosenCand = pickBestFissionCandidate(
-            initialOptions[chosenDir],
-            startSpot,
-            [startSpot],
-            grid,
-            wraparound,
-            width,
-            height
+          const testChip = { x: startSpot.x, y: startSpot.y, level: 8 };
+          const initialOptions = calculateFissionOptions(testChip, [testChip]);
+          const validDirs = (['UP', 'DOWN', 'LEFT', 'RIGHT'] as Direction[]).filter(
+            (d) => initialOptions[d] && initialOptions[d].length > 0
           );
 
-          workingChips = [
-            { x: startSpot.x, y: startSpot.y, level: 7 },
-            { x: chosenCand.targetPos.x, y: chosenCand.targetPos.y, level: 7 },
-          ];
-          attemptFissionHistory.push({
-            pushPos: { ...chosenCand.pushPos },
-            pushDir: OPPOSITE_MAP[chosenDir],
-            targetPos: { ...chosenCand.targetPos },
-            subLevel: 7,
-          });
-          initialFissionSuccess = true;
-        }
+          if (validDirs.length > 0) {
+            // Rule 1: Find direction where distance to first object is furthest
+            const dirDists = validDirs.map((d) => ({
+              dir: d,
+              dist: getDistanceToFirstObstacle(startSpot, d, [startSpot], grid, wraparound, width, height, wormholes),
+            }));
+            dirDists.sort((a, b) => b.dist - a.dist);
+            const maxDist = dirDists[0].dist;
+            const bestDirs = dirDists.filter((d) => d.dist === maxDist).map((d) => d.dir);
+            const chosenDir = bestDirs[Math.floor(Math.random() * bestDirs.length)];
 
-        if (!initialFissionSuccess) {
-          continue;
+            // Rule 2: In chosen direction, pick candidate that avoids adjacent objects
+            const chosenCand = pickBestFissionCandidate(
+              initialOptions[chosenDir],
+              startSpot,
+              [startSpot],
+              grid,
+              wraparound,
+              width,
+              height
+            );
+
+            workingChips = [
+              { x: startSpot.x, y: startSpot.y, level: 7 },
+              { x: chosenCand.targetPos.x, y: chosenCand.targetPos.y, level: 7 },
+            ];
+            attemptFissionHistory.push({
+              pushPos: { ...chosenCand.pushPos },
+              pushDir: OPPOSITE_MAP[chosenDir],
+              targetPos: { ...chosenCand.targetPos },
+              subLevel: 7,
+            });
+            initialFissionSuccess = true;
+          }
+
+          if (!initialFissionSuccess) {
+            continue;
+          }
         }
 
         // Step 2 & 3:
@@ -1122,9 +1157,16 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
         }
       }
 
-      if (bestResultChips.length === 0) {
-        showToast('⚠️ 自動裂變失敗，請嘗試放寬棋盤障礙或開啟環狀邊界！');
-        return;
+      if (hasPreplacedChips) {
+        if (bestResultChips.length <= editorChips.length) {
+          showToast('⚠️ 現有預佈置晶片周圍空間受限，無足夠空間進行裂變推演！請嘗試調整晶片位置或開啟環狀邊界。');
+          return;
+        }
+      } else {
+        if (bestResultChips.length === 0) {
+          showToast('⚠️ 自動裂變失敗，請嘗試放寬棋盤障礙或開啟環狀邊界！');
+          return;
+        }
       }
 
       // Convert reverse-fission history into forward SolutionSteps
@@ -1141,16 +1183,30 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
           merged: true,
         }));
 
+      const finalSolutionSteps =
+        hasPreplacedChips && editorSolutionSteps && editorSolutionSteps.length > 0
+          ? [...generatedSolutionSteps, ...editorSolutionSteps]
+          : generatedSolutionSteps;
+
       setEditorChips(bestResultChips);
-      setEditorSolutionSteps(generatedSolutionSteps);
-      recordHistory(grid, bestResultChips, wormholes, width, height, wraparound, generatedSolutionSteps);
+      setEditorSolutionSteps(finalSolutionSteps);
+      recordHistory(grid, bestResultChips, wormholes, width, height, wraparound, finalSolutionSteps);
       sounds.playVictory();
       setIsAutoLayoutDialogOpen(false);
 
-      if (bestResultChips.length >= actualTargetK) {
-        showToast(`✨ 自動佈局完成！已生成 ${bestResultChips.length} 顆均勻分佈晶片（已推演 ${generatedSolutionSteps.length} 步通關解法）！`);
+      if (hasPreplacedChips) {
+        const addedCount = bestResultChips.length - editorChips.length;
+        if (bestResultChips.length >= actualTargetK) {
+          showToast(`✨ 自動佈局完成！已由預佈置的 ${editorChips.length} 顆加晶片至設定的 ${bestResultChips.length} 顆（增加 ${addedCount} 顆，已推演 ${generatedSolutionSteps.length} 步裂變解法）！`);
+        } else {
+          showToast(`✨ 自動佈局完成！共加晶片至 ${bestResultChips.length} 顆（受限於棋盤當前格局之最大均勻裂變路徑）`);
+        }
       } else {
-        showToast(`✨ 自動佈局完成！共生成 ${bestResultChips.length} 顆晶片（棋盤格局已達最大裂變均勻路徑）`);
+        if (bestResultChips.length >= actualTargetK) {
+          showToast(`✨ 自動佈局完成！已生成 ${bestResultChips.length} 顆均勻分佈晶片（已推演 ${generatedSolutionSteps.length} 步通關解法）！`);
+        } else {
+          showToast(`✨ 自動佈局完成！共生成 ${bestResultChips.length} 顆晶片（棋盤格局已達最大裂變均勻路徑）`);
+        }
       }
     },
     [
@@ -1159,6 +1215,8 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
       width,
       wraparound,
       wormholes,
+      editorChips,
+      editorSolutionSteps,
       calculateFissionOptions,
       getDistanceToFirstObstacle,
       getAdjacencyInfo,
@@ -1814,7 +1872,7 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
             {/* Auto Layout (自動佈局) */}
             <button
               type="button"
-              onClick={() => setIsAutoLayoutDialogOpen(true)}
+              onClick={handleOpenAutoLayoutDialog}
               className="px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-purple-900/80 to-indigo-900/80 hover:from-purple-800 hover:to-indigo-800 text-purple-200 text-xs font-mono flex items-center gap-1.5 border border-purple-500/50 shadow-sm cursor-pointer transition-all hover:scale-105"
               title="晶片裂變自動佈局 (Auto Layout)"
             >
@@ -1993,7 +2051,7 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
             {/* Auto Layout in Toolbar */}
             <button
               type="button"
-              onClick={() => setIsAutoLayoutDialogOpen(true)}
+              onClick={handleOpenAutoLayoutDialog}
               className="px-2.5 py-1 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-colors cursor-pointer bg-purple-950/80 border-purple-500/60 text-purple-200 hover:bg-purple-900 hover:border-purple-400"
               title="晶片自動佈局 (Auto Layout)"
             >
@@ -2487,134 +2545,219 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
       )}
 
       {/* Auto Layout (自定晶片自動佈局) Modal Dialog - Single unified interface */}
-      {isAutoLayoutDialogOpen && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-lg bg-slate-900 border-2 border-purple-500/60 rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
-                  <Wand2 className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                    自定晶片自動佈局 (Auto Layout)
-                  </h4>
-                  <p className="text-xs text-slate-400">
-                    設定欲佈置的晶片總數 (K)，以反向物理裂變推演生成具備解法的關卡佈局
-                  </p>
-                </div>
-              </div>
+      {isAutoLayoutDialogOpen && (() => {
+        const hasPreplaced = editorChips.length > 0;
+        const minK = 2;
+        const hasFissionable = !hasPreplaced || editorChips.some((c) => c.level > 1);
 
-              <button
-                type="button"
-                onClick={() => setIsAutoLayoutDialogOpen(false)}
-                className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+        // 玩家輸入晶片總數的頁面，不需要加上預先放置的晶片數量，使用常規標準推薦總數
+        const quickPresets = [8, 10, 12, 16, 20, 24, 30, 36];
 
-            {/* Unified Direct Input Section */}
-            <div className="flex flex-col gap-3.5">
-              {/* Stepper + Direct numeric input for K */}
-              <div className="p-4 bg-slate-950/80 rounded-xl border border-purple-500/40 flex flex-col items-center gap-2 shadow-inner">
-                <span className="text-xs font-mono text-purple-300 font-bold">
-                  設定晶片總數 (K)：
-                </span>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setAutoChipsCount((prev) => Math.max(2, prev - 1))}
-                    className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-mono font-bold text-lg border border-slate-700 flex items-center justify-center cursor-pointer transition-all"
-                    title="減少 1 顆"
-                  >
-                    -
-                  </button>
-                  <div className="flex items-center gap-1.5 px-4 py-1.5 bg-slate-900 border-2 border-purple-500/70 rounded-xl shadow-inner shadow-purple-950/50">
-                    <input
-                      type="number"
-                      min={2}
-                      max={64}
-                      value={autoChipsCount}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value, 10);
-                        setAutoChipsCount(isNaN(val) ? 2 : Math.max(2, Math.min(64, val)));
-                      }}
-                      className="w-20 py-0.5 bg-transparent text-white font-mono text-2xl font-black text-center focus:outline-none"
-                    />
-                    <span className="text-xs text-purple-400 font-mono font-bold">顆晶片</span>
+        return (
+          <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md animate-fade-in">
+            <div className="relative w-full max-w-lg bg-slate-900 border-2 border-purple-500/60 rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col gap-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${hasPreplaced ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400' : 'bg-purple-500/20 border border-purple-500/40 text-purple-400'}`}>
+                    <Wand2 className="w-5 h-5" />
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setAutoChipsCount((prev) => Math.min(64, prev + 1))}
-                    className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-mono font-bold text-lg border border-slate-700 flex items-center justify-center cursor-pointer transition-all"
-                    title="增加 1 顆"
-                  >
-                    +
-                  </button>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                        晶片自動佈局 (Auto Layout)
+                      </h4>
+                      {hasPreplaced ? (
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[10px] font-mono font-bold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          預佈置晶片擴展模式 ({editorChips.length} 顆)
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[10px] font-mono font-bold">
+                          全新佈局模式
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {hasPreplaced
+                        ? `保留現有 ${editorChips.length} 顆晶片，跳過放置超級電腦，往棋盤加晶片加到設定的數量為止`
+                        : '反向物理裂變推演：放置超級電腦並反覆裂變，生成具備解法的均勻關卡'}
+                    </p>
+                  </div>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsAutoLayoutDialogOpen(false)}
+                  className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
 
-              {/* Quick Preset Buttons (8 10 12 16 20 24 30 36) */}
-              <div className="flex flex-col gap-1.5">
-                <span className="text-xs font-mono text-slate-400">快速選擇推薦總數：</span>
-                <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
-                  {[8, 10, 12, 16, 20, 24, 30, 36].map((num) => {
-                    const isSelected = autoChipsCount === num;
-                    return (
-                      <button
-                        key={num}
-                        type="button"
-                        onClick={() => setAutoChipsCount(num)}
-                        className={`py-2 px-1 rounded-xl font-mono text-sm font-bold border transition-all cursor-pointer flex flex-col items-center justify-center gap-0.5 ${
-                          isSelected
-                            ? 'bg-purple-900/90 text-purple-100 border-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.5)] scale-105 ring-1 ring-purple-300'
-                            : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700 hover:border-slate-600'
-                        }`}
-                      >
-                        <span>{num}</span>
-                        <span className="text-[9px] text-slate-400 font-normal">顆</span>
-                      </button>
-                    );
-                  })}
+              {/* Warning if pre-placed chips have no fissionable level > 1 */}
+              {hasPreplaced && !hasFissionable && (
+                <div className="p-3 bg-amber-950/40 border border-amber-500/50 rounded-xl text-xs text-amber-200 flex items-start gap-2">
+                  <span className="text-base leading-none">⚠️</span>
+                  <span>
+                    棋盤上的預佈置晶片等級皆為 1，無法再進行裂變！請先點擊棋盤上的晶片將其等級設為 2 以上，再啟動自動佈局。
+                  </span>
                 </div>
+              )}
+
+              {/* Unified Direct Input Section */}
+              <div className="flex flex-col gap-3.5">
+                {/* Stepper + Direct numeric input for K */}
+                <div className="p-4 bg-slate-950/80 rounded-xl border border-purple-500/40 flex flex-col items-center gap-2 shadow-inner">
+                  <span className="text-xs font-mono text-purple-300 font-bold">
+                    設定最終晶片總數 (K)：
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setAutoChipsCount((prev) => Math.max(minK, prev - 1))}
+                      className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-mono font-bold text-lg border border-slate-700 flex items-center justify-center cursor-pointer transition-all"
+                      title="減少 1 顆"
+                    >
+                      -
+                    </button>
+                    <div className="flex items-center gap-1.5 px-4 py-1.5 bg-slate-900 border-2 border-purple-500/70 rounded-xl shadow-inner shadow-purple-950/50">
+                      <input
+                        type="number"
+                        min={minK}
+                        max={64}
+                        value={autoChipsCount}
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value, 10);
+                          setAutoChipsCount(isNaN(val) ? minK : Math.max(minK, Math.min(64, val)));
+                        }}
+                        className="w-20 py-0.5 bg-transparent text-white font-mono text-2xl font-black text-center focus:outline-none"
+                      />
+                      <span className="text-xs text-purple-400 font-mono font-bold">顆晶片</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setAutoChipsCount((prev) => Math.min(64, prev + 1))}
+                      className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-mono font-bold text-lg border border-slate-700 flex items-center justify-center cursor-pointer transition-all"
+                      title="增加 1 顆"
+                    >
+                      +
+                    </button>
+                  </div>
+                  {hasPreplaced && (
+                    <div className="flex items-center gap-1.5 text-[11px] font-mono mt-1">
+                      <span className="text-slate-400">棋盤現有 {editorChips.length} 顆</span>
+                      <span>·</span>
+                      {autoChipsCount > editorChips.length ? (
+                        <span className="text-emerald-400 font-bold">
+                          將加晶片至設定的 {autoChipsCount} 顆（增加 {autoChipsCount - editorChips.length} 顆）
+                        </span>
+                      ) : (
+                        <span className="text-amber-400 font-bold">
+                          （現有 {editorChips.length} 顆，請設定大於 {editorChips.length} 顆以繼續加晶片）
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Quick Preset Buttons */}
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-xs font-mono text-slate-400">快速選擇推薦總數：</span>
+                  <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
+                    {quickPresets.map((num) => {
+                      const isSelected = autoChipsCount === num;
+                      return (
+                        <button
+                          key={num}
+                          type="button"
+                          onClick={() => setAutoChipsCount(num)}
+                          className={`py-2 px-1 rounded-xl font-mono text-sm font-bold border transition-all cursor-pointer flex flex-col items-center justify-center gap-0.5 ${
+                            isSelected
+                              ? 'bg-purple-900/90 text-purple-100 border-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.5)] scale-105 ring-1 ring-purple-300'
+                              : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700 hover:border-slate-600'
+                          }`}
+                        >
+                          <span>{num}</span>
+                          <span className="text-[9px] text-slate-400 font-normal">顆</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Rules description */}
+                {hasPreplaced ? (
+                  <div className="p-3 bg-emerald-950/25 border border-emerald-500/30 rounded-xl text-xs text-slate-300 flex flex-col gap-1.5">
+                    <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>預設晶片自動裂變流程（保留現有佈局）：</span>
+                    </div>
+                    <div className="text-[11px] text-slate-300 flex flex-col gap-1 pl-1 font-mono leading-relaxed">
+                      <div>
+                        ✓ <span className="text-emerald-300 font-semibold">跳過步驟一：</span>
+                        不清除現有晶片、不放置超級電腦，保留棋盤上預先安排的 {editorChips.length} 顆晶片。
+                      </div>
+                      <div>
+                        ✓ <span className="text-purple-300 font-semibold">定向物理裂變：</span>
+                        對棋盤上等級 &gt; 1 的現有晶片依序計算推動方向與位移，避開緊鄰障礙並挑選空曠路徑。
+                      </div>
+                      <div>
+                        ✓ <span className="text-cyan-300 font-semibold">蟲洞規則：</span>
+                        新生成的晶片可以緊鄰蟲洞，但絕不會覆蓋在蟲洞上。
+                      </div>
+                      <div>
+                        ✓ <span className="text-emerald-300 font-semibold">加至設定數量：</span>
+                        往棋盤上加晶片加到設定的數量（{autoChipsCount} 顆）為止。
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-purple-950/30 border border-purple-900/50 rounded-xl text-xs text-slate-300 flex flex-col gap-1.5">
+                    <div className="font-bold text-purple-300 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                      <span>全新關卡反向物理推演流程：</span>
+                    </div>
+                    <div className="text-[11px] text-slate-400 flex flex-col gap-1 pl-1 font-mono leading-relaxed">
+                      <div>1. 隨機在棋盤開闊空白處放置 1 顆最高級 (超級電腦，等級 8) 晶片並進行首輪裂變。</div>
+                      <div>2. 選擇朝障礙物最遠方向且位移不緊鄰現有物件之路徑進行定向物理裂變。</div>
+                      <div>3. 蟲洞規則：新生成的晶片可以緊鄰蟲洞，但絕不會覆蓋在蟲洞上。</div>
+                      <div>4. 重複前項動作，往棋盤上加晶片加到設定的數量（{autoChipsCount} 顆）為止。</div>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Rules description */}
-              <div className="p-3 bg-purple-950/30 border border-purple-900/50 rounded-xl text-xs text-slate-300 flex flex-col gap-1.5">
-                <div className="font-bold text-purple-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-                  <span>自動佈局反向物理推演流程：</span>
-                </div>
-                <div className="text-[11px] text-slate-400 flex flex-col gap-1 pl-1 font-mono">
-                  <div>1. 隨機在棋盤空白處放置一顆最高級 (超級電腦，等級 8) 晶片，並將它裂變成兩顆次級晶片。</div>
-                  <div>2. 隨機再選一顆級數大於 1 的晶片進行定向物理裂變。</div>
-                  <div>3. 重複前項動作 (2)，直到晶片總數達到或大於 K 為止。</div>
-                </div>
+              {/* Confirm / Cancel Buttons */}
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setIsAutoLayoutDialogOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs cursor-pointer transition-colors"
+                >
+                  取消
+                </button>
+                <button
+                  type="button"
+                  disabled={hasPreplaced && (!hasFissionable || autoChipsCount <= editorChips.length)}
+                  onClick={() => handleExecuteAutoLayout(autoChipsCount)}
+                  className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-all ${
+                    hasPreplaced && (!hasFissionable || autoChipsCount <= editorChips.length)
+                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                      : 'bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-500 hover:from-purple-500 hover:to-indigo-500 text-white shadow-purple-600/30 active:scale-95 cursor-pointer'
+                  }`}
+                >
+                  <Check className="w-4 h-4 stroke-[3]" />
+                  <span>
+                    {hasPreplaced
+                      ? `確定自動佈局（加到 ${autoChipsCount} 顆）`
+                      : `確定執行自動佈局 (${autoChipsCount} 顆)`}
+                  </span>
+                </button>
               </div>
-            </div>
-
-            {/* Confirm / Cancel Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
-              <button
-                type="button"
-                onClick={() => setIsAutoLayoutDialogOpen(false)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs cursor-pointer transition-colors"
-              >
-                取消
-              </button>
-              <button
-                type="button"
-                onClick={() => handleExecuteAutoLayout(autoChipsCount)}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-500 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-purple-600/30 active:scale-95 transition-all cursor-pointer"
-              >
-                <Check className="w-4 h-4 stroke-[3]" />
-                <span>確定執行自動佈局</span>
-              </button>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

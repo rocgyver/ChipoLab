@@ -44,8 +44,8 @@ export const SolutionModal: React.FC<SolutionModalProps> = ({
                 <span>
                   {level.id === 999
                     ? '自製實驗大樓 · 自動佈局推演解法'
-                    : level.id === 0
-                    ? 'Fab.0 · 官方 BFS 驗證解法'
+                    : level.chapter === 0
+                    ? `Fab.${level.fabIndex ?? level.id} · 官方 BFS 驗證解法`
                     : `Lab.${level.id} · 官方 BFS 驗證解法`}
                 </span>
               </h3>

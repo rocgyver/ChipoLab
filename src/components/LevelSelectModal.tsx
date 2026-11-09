@@ -22,7 +22,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   });
 
   const chapters = [
-    { id: 0, name: 'Level.0：晶片工廠', range: 'Fab.0', minStarsToUnlock: 0 },
+    { id: 0, name: 'Level.0：極限挑戰工廠', range: 'Fab.0-5', minStarsToUnlock: 0 },
     { id: 1, name: 'Level.1：基礎合成室', range: 'Lab.1-6', minStarsToUnlock: 0 },
     { id: 2, name: 'Level.2：電路迴廊', range: 'Lab.7-12', minStarsToUnlock: 6 },
     { id: 3, name: 'Level.3：多階處理器', range: 'Lab.13-18', minStarsToUnlock: 18 },
@@ -63,7 +63,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
         {/* Chapter Tabs */}
         <div className="flex items-center gap-1 px-4 py-2 bg-slate-950/40 border-b border-slate-800/80 overflow-x-auto no-scrollbar">
           {chapters.map((ch) => {
-            const isUnlocked = totalStars >= ch.minStarsToUnlock || ch.id <= 1;
+            const isUnlocked = totalStars >= ch.minStarsToUnlock || ch.id <= 3;
             const isActive = activeChapter === ch.id;
 
             return (
@@ -112,7 +112,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 <div className="flex items-center justify-between w-full mb-1">
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs font-mono font-bold text-emerald-400">
-                      {lvl.id === 0 ? 'Fab.0' : `Lab.${lvl.id}`}
+                      {lvl.chapter === 0 ? `Fab.${lvl.fabIndex ?? lvl.id}` : `Lab.${lvl.id}`}
                     </span>
                     {isSolved && (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />

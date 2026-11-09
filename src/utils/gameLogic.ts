@@ -59,8 +59,8 @@ export function getEffectiveGrid(level: LevelData): CellType[][] {
   const isWrap = isLevelWraparound(level);
   if (!isWrap) return level.grid;
 
-  // Levels with designed partial boundary walls (e.g. Fab.0) preserve their grid layout
-  if (level.id === 0 || level.customBoundary) {
+  // Levels with designed partial boundary walls or chapter 0 preserve their grid layout
+  if (level.id === 0 || level.chapter === 0 || level.customBoundary) {
     return level.grid;
   }
 
