@@ -34,10 +34,10 @@ export const ChipCard: React.FC<ChipCardProps> = ({
     >
       {/* Chip Package Wrapper: Centered at 80% to give ~2px margin from tile boundaries */}
       <div className="relative w-[80%] h-full flex items-center justify-center">
-        {/* 2. 左右兩排外伸針腳 (Left Side: 3px dots in micro mode, 30% embedded, 4 bars in normal mode) */}
-        <div className="absolute -left-[2.1px] @[46px]:-left-[5px] top-[14%] bottom-[14%] flex flex-col justify-evenly items-center pointer-events-none z-20">
+        {/* 2. 左右兩排外伸針腳 (Left Side: 5 pairs in numberOnly mode, 4 pairs in normal mode) */}
+        <div className="absolute -left-[2.1px] @[46px]:-left-[5px] top-[10%] bottom-[10%] flex flex-col justify-evenly items-center pointer-events-none z-20">
           {numberOnly ? (
-            [0, 1, 2, 3].map((i) => (
+            [0, 1, 2, 3, 4].map((i) => (
               <div
                 key={`dot-l-${i}`}
                 className="w-[3px] h-[3px] rounded-full bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border-[0.5px] border-slate-900 shadow-[0_0_1.5px_rgba(251,191,36,0.6)]"
@@ -45,9 +45,9 @@ export const ChipCard: React.FC<ChipCardProps> = ({
             ))
           ) : (
             <>
-              {/* Auto-responsive micro (<46px): 4 dots embedded 30% into chip edge */}
+              {/* Auto-responsive micro (<46px): 5 dots embedded 30% into chip edge */}
               <div className="flex @[46px]:hidden flex-col justify-evenly items-center w-full h-full">
-                {[0, 1, 2, 3].map((i) => (
+                {[0, 1, 2, 3, 4].map((i) => (
                   <div
                     key={`c-dot-l-${i}`}
                     className="w-[3px] h-[3px] rounded-full bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border-[0.5px] border-slate-900 shadow-[0_0_1.5px_rgba(251,191,36,0.6)]"
@@ -56,7 +56,7 @@ export const ChipCard: React.FC<ChipCardProps> = ({
               </div>
 
               {/* Normal mode (>=46px): 4 metallic extended bars */}
-              <div className="hidden @[46px]:flex flex-col justify-evenly items-end w-full h-full">
+              <div className="hidden @[46px]:flex flex-col justify-evenly items-start w-full h-full">
                 {[0, 1, 2, 3].map((i) => (
                   <div
                     key={`pin-l-${i}`}
@@ -169,10 +169,10 @@ export const ChipCard: React.FC<ChipCardProps> = ({
           )}
         </div>
 
-        {/* 2. 左右兩排外伸針腳 (Right Side: 3px dots in micro mode, 30% embedded, 4 bars in normal mode) */}
-        <div className="absolute -right-[2.1px] @[46px]:-right-[5px] top-[14%] bottom-[14%] flex flex-col justify-evenly items-center pointer-events-none z-20">
+        {/* 2. 左右兩排外伸針腳 (Right Side: 5 pairs in numberOnly mode, 4 pairs in normal mode) */}
+        <div className="absolute -right-[2.1px] @[46px]:-right-[5px] top-[10%] bottom-[10%] flex flex-col justify-evenly items-center pointer-events-none z-20">
           {numberOnly ? (
-            [0, 1, 2, 3].map((i) => (
+            [0, 1, 2, 3, 4].map((i) => (
               <div
                 key={`dot-r-${i}`}
                 className="w-[3px] h-[3px] rounded-full bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border-[0.5px] border-slate-900 shadow-[0_0_1.5px_rgba(251,191,36,0.6)]"
@@ -180,9 +180,9 @@ export const ChipCard: React.FC<ChipCardProps> = ({
             ))
           ) : (
             <>
-              {/* Auto-responsive micro (<46px): 4 dots embedded 30% into chip edge */}
+              {/* Auto-responsive micro (<46px): 5 dots embedded 30% into chip edge */}
               <div className="flex @[46px]:hidden flex-col justify-evenly items-center w-full h-full">
-                {[0, 1, 2, 3].map((i) => (
+                {[0, 1, 2, 3, 4].map((i) => (
                   <div
                     key={`c-dot-r-${i}`}
                     className="w-[3px] h-[3px] rounded-full bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border-[0.5px] border-slate-900 shadow-[0_0_1.5px_rgba(251,191,36,0.6)]"
