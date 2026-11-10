@@ -79,7 +79,7 @@ export const LEVELS: VerifiedLevelData[] = [
       "y": 7
     },
     "targetLevel": 8,
-    "parMoves": 36,
+    "parMoves": 27,
     "wraparound": true,
     "grid": [
       [
@@ -423,6 +423,197 @@ export const LEVELS: VerifiedLevelData[] = [
         "x": 9,
         "y": 9,
         "level": 7
+      }
+    ],
+    "solutionSteps": [
+      {
+        "standX": 6,
+        "standY": 5,
+        "dir": "LEFT",
+        "chipX": 5,
+        "chipY": 5,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 2,
+        "dir": "RIGHT",
+        "chipX": 3,
+        "chipY": 2,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 2,
+        "dir": "LEFT",
+        "chipX": 11,
+        "chipY": 2,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 12,
+        "dir": "RIGHT",
+        "chipX": 3,
+        "chipY": 12,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 13,
+        "dir": "UP",
+        "chipX": 6,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 12,
+        "dir": "LEFT",
+        "chipX": 11,
+        "chipY": 12,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 8,
+        "standY": 13,
+        "dir": "UP",
+        "chipX": 8,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 3,
+        "standY": 9,
+        "dir": "UP",
+        "chipX": 3,
+        "chipY": 8,
+        "chipLevel": 3,
+        "merged": false
+      },
+      {
+        "standX": 5,
+        "standY": 2,
+        "dir": "RIGHT",
+        "chipX": 6,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 5,
+        "dir": "LEFT",
+        "chipX": 12,
+        "chipY": 5,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 1,
+        "standY": 5,
+        "dir": "RIGHT",
+        "chipX": 2,
+        "chipY": 5,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 11,
+        "standY": 9,
+        "dir": "UP",
+        "chipX": 11,
+        "chipY": 8,
+        "chipLevel": 3,
+        "merged": false
+      },
+      {
+        "standX": 2,
+        "standY": 5,
+        "dir": "RIGHT",
+        "chipX": 3,
+        "chipY": 5,
+        "chipLevel": 4,
+        "merged": false
+      },
+      {
+        "standX": 12,
+        "standY": 5,
+        "dir": "LEFT",
+        "chipX": 11,
+        "chipY": 5,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 10,
+        "standY": 5,
+        "dir": "LEFT",
+        "chipX": 9,
+        "chipY": 5,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 8,
+        "standY": 1,
+        "dir": "DOWN",
+        "chipX": 8,
+        "chipY": 2,
+        "chipLevel": 4,
+        "merged": false
+      },
+      {
+        "standX": 4,
+        "standY": 9,
+        "dir": "RIGHT",
+        "chipX": 5,
+        "chipY": 9,
+        "chipLevel": 6,
+        "merged": false
+      },
+      {
+        "standX": 6,
+        "standY": 4,
+        "dir": "RIGHT",
+        "chipX": 7,
+        "chipY": 4,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 8,
+        "standY": 3,
+        "dir": "DOWN",
+        "chipX": 8,
+        "chipY": 4,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 8,
+        "standY": 6,
+        "dir": "UP",
+        "chipX": 8,
+        "chipY": 5,
+        "chipLevel": 6,
+        "merged": true
+      },
+      {
+        "standX": 7,
+        "standY": 9,
+        "dir": "RIGHT",
+        "chipX": 8,
+        "chipY": 9,
+        "chipLevel": 7,
+        "merged": true
       }
     ],
     "hint": "Fab.0 四周邊界各留約 1/3 的兩段短牆壁，其餘為環狀穿越邊界。善用短牆煞停並將周圍晶片引導對撞，逐級連鎖推升至 Titan 超級電腦！"
