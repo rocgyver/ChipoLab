@@ -1288,43 +1288,6 @@ export default function App() {
           onOpenEditor={() => setIsEditorOpen(true)}
         />
 
-        {/* Hint Toast Banner */}
-        {hintMessage && (
-          <div className="w-full max-w-2xl mb-3 px-4 py-2.5 rounded-xl bg-amber-950/70 border border-amber-600/50 text-amber-200 text-xs flex items-center justify-between gap-3 shadow-md animate-in fade-in duration-150">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>{hintMessage}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setIsSolutionModalOpen(true)}
-                className="text-emerald-400 hover:text-emerald-200 font-mono text-xs px-2.5 py-1 rounded bg-emerald-950/80 border border-emerald-800 flex items-center gap-1 cursor-pointer"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>查看解法</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setHintMessage(null)}
-                className="text-amber-400 hover:text-white font-mono text-xs px-2 py-1 rounded bg-amber-900/60 cursor-pointer"
-              >
-                關閉
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Catch / Block Toast Banner */}
-        {catchMessage && (
-          <div className="w-full max-w-2xl mb-3 px-4 py-2.5 rounded-xl bg-cyan-950/90 border border-cyan-400/80 text-cyan-200 text-xs flex items-center justify-between gap-3 shadow-lg shadow-cyan-950/50 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center gap-2">
-              <span className="text-base">✋</span>
-              <span className="font-bold">{catchMessage}</span>
-            </div>
-          </div>
-        )}
-
         {/* Game Grid Board */}
         <div className="w-full flex flex-col items-center justify-center my-auto gap-2">
           <GameBoard
@@ -1355,7 +1318,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Lower Control & Failure Alert Section (Below GameBoard) */}
+        {/* Lower Control, Popups & Failure Alert Section (Below GameBoard) */}
         <div className="relative w-full max-w-sm sm:max-w-2xl mx-auto mt-2 min-h-[96px] md:min-h-0 flex items-center justify-center">
           {/* Mobile Virtual D-Pad */}
           <DpadControls
@@ -1364,6 +1327,55 @@ export default function App() {
             onReset={handleReset}
             canUndo={history.length > 0}
           />
+
+          {/* Catch / Block Defense Toast Popup (Covers virtual keypad below GameBoard) */}
+          {catchMessage && (
+            <div className="absolute inset-0 z-25 flex items-center justify-center animate-in fade-in zoom-in-95 duration-150 pointer-events-auto">
+              <div className="w-full h-full md:h-auto min-h-[90px] px-4 py-3 rounded-2xl bg-cyan-950/95 border-2 border-cyan-400 text-cyan-100 flex items-center justify-center gap-3 shadow-2xl shadow-cyan-950/80 backdrop-blur-md">
+                <span className="text-2xl animate-bounce">✋</span>
+                <div className="flex flex-col text-left">
+                  <span className="font-bold text-sm text-cyan-200">{catchMessage}</span>
+                  <span className="text-[10px] text-cyan-300/80">博士成功反手阻擋晶片高速衝撞！</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Hint / Auto-play Demo Toast Popup (Covers virtual keypad below GameBoard) */}
+          {hintMessage && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center animate-in fade-in zoom-in-95 duration-150 pointer-events-auto">
+              <div className="w-full h-full md:h-auto min-h-[90px] p-3.5 sm:p-4 rounded-2xl bg-amber-950/95 border-2 border-amber-500 text-amber-100 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xl shadow-amber-950/80 backdrop-blur-md">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-9 h-9 rounded-full bg-amber-900/80 border border-amber-400 flex items-center justify-center shrink-0">
+                    <Sparkles className="w-5 h-5 text-amber-300" />
+                  </div>
+                  <div className="flex flex-col min-w-0 text-left">
+                    <span className="font-bold text-xs sm:text-sm text-amber-200 leading-snug">{hintMessage}</span>
+                    <span className="text-[10px] text-amber-300/70 mt-0.5">關卡提示與解法引導</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+                  {currentLevel.solutionSteps && currentLevel.solutionSteps.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setIsSolutionModalOpen(true)}
+                      className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-mono text-xs font-bold flex items-center gap-1 shadow-md transition-all cursor-pointer"
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      <span>查看解法</span>
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setHintMessage(null)}
+                    className="px-3.5 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-700 active:scale-95 text-white font-mono text-xs font-bold shadow-md transition-all cursor-pointer"
+                  >
+                    關閉
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Knocked Out Failure Alert Banner (Placed below GameBoard, covers virtual controls when knocked out) */}
           {isKnockedOut && (

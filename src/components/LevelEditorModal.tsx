@@ -1987,7 +1987,7 @@ export const LevelEditorModal: React.FC<LevelEditorModalProps> = ({
                     }}
                     title={`放置 ${def.name} (${def.code})`}
                   >
-                    {lvl === 8 ? '8★' : `C.${lvl}`}
+                    {lvl === 8 ? '★' : `C.${lvl}`}
                   </button>
                 );
               })}

@@ -33,22 +33,22 @@ export const ChipCard: React.FC<ChipCardProps> = ({
       }`}
     >
       {/* 2. 左右兩排外伸針腳 (Left Side: 4 dots in micro mode, 4 bars in normal mode) */}
-      <div className="absolute left-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-center pointer-events-none z-10">
+      <div className="absolute left-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-end pointer-events-none z-10">
         {numberOnly ? (
           [0, 1, 2, 3].map((i) => (
             <div
               key={`dot-l-${i}`}
-              className="w-1 h-1 rounded-full bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.5)]"
+              className="w-1 h-1 rounded-full translate-x-[0.5px] bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
             />
           ))
         ) : (
           <>
-            {/* Auto-responsive micro (<46px): 4 dots */}
-            <div className="flex @[46px]:hidden flex-col justify-evenly items-center w-full h-full">
+            {/* Auto-responsive micro (<46px): 4 dots clinging tightly to edge */}
+            <div className="flex @[46px]:hidden flex-col justify-evenly items-end w-full h-full">
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={`c-dot-l-${i}`}
-                  className="w-1 h-1 rounded-full bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.5)]"
+                  className="w-1 h-1 rounded-full translate-x-[0.5px] bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
                 />
               ))}
             </div>
@@ -99,10 +99,10 @@ export const ChipCard: React.FC<ChipCardProps> = ({
               style={{
                 color: def.borderColor,
                 textShadow: `0 0 6px ${def.glowColor}`,
-                fontSize: 'clamp(10px, 48cqw, 20px)',
+                fontSize: isSupercomputer ? 'clamp(14px, 56cqw, 24px)' : 'clamp(10px, 48cqw, 20px)',
               }}
             >
-              {isSupercomputer ? '8★' : level}
+              {isSupercomputer ? '★' : level}
             </span>
           </div>
         ) : (
@@ -114,10 +114,10 @@ export const ChipCard: React.FC<ChipCardProps> = ({
                 style={{
                   color: def.borderColor,
                   textShadow: `0 0 6px ${def.glowColor}`,
-                  fontSize: 'clamp(10px, 48cqw, 20px)',
+                  fontSize: isSupercomputer ? 'clamp(14px, 56cqw, 24px)' : 'clamp(10px, 48cqw, 20px)',
                 }}
               >
-                {isSupercomputer ? '8★' : level}
+                {isSupercomputer ? '★' : level}
               </span>
             </div>
 
@@ -168,22 +168,22 @@ export const ChipCard: React.FC<ChipCardProps> = ({
       </div>
 
       {/* 2. 左右兩排外伸針腳 (Right Side: 4 dots in micro mode, 4 bars in normal mode) */}
-      <div className="absolute right-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-center pointer-events-none z-10">
+      <div className="absolute right-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-start pointer-events-none z-10">
         {numberOnly ? (
           [0, 1, 2, 3].map((i) => (
             <div
               key={`dot-r-${i}`}
-              className="w-1 h-1 rounded-full bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.5)]"
+              className="w-1 h-1 rounded-full -translate-x-[0.5px] bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
             />
           ))
         ) : (
           <>
-            {/* Auto-responsive micro (<46px): 4 dots */}
-            <div className="flex @[46px]:hidden flex-col justify-evenly items-center w-full h-full">
+            {/* Auto-responsive micro (<46px): 4 dots clinging tightly to edge */}
+            <div className="flex @[46px]:hidden flex-col justify-evenly items-start w-full h-full">
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={`c-dot-r-${i}`}
-                  className="w-1 h-1 rounded-full bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.5)]"
+                  className="w-1 h-1 rounded-full -translate-x-[0.5px] bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
                 />
               ))}
             </div>
