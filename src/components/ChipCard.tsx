@@ -33,22 +33,22 @@ export const ChipCard: React.FC<ChipCardProps> = ({
       }`}
     >
       {/* 2. 左右兩排外伸針腳 (Left Side: 4 dots in micro mode, 4 bars in normal mode) */}
-      <div className="absolute left-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-end pointer-events-none z-10">
+      <div className="absolute left-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-end pointer-events-none z-20">
         {numberOnly ? (
           [0, 1, 2, 3].map((i) => (
             <div
               key={`dot-l-${i}`}
-              className="w-1 h-1 rounded-full translate-x-[0.5px] bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
+              className="w-1.5 h-1.5 rounded-full translate-x-[1.5px] bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.7)]"
             />
           ))
         ) : (
           <>
-            {/* Auto-responsive micro (<46px): 4 dots clinging tightly to edge */}
+            {/* Auto-responsive micro (<46px): 4 dots embedded 30% into chip edge */}
             <div className="flex @[46px]:hidden flex-col justify-evenly items-end w-full h-full">
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={`c-dot-l-${i}`}
-                  className="w-1 h-1 rounded-full translate-x-[0.5px] bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
+                  className="w-1.5 h-1.5 rounded-full translate-x-[1.5px] bg-gradient-to-r from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.7)]"
                 />
               ))}
             </div>
@@ -168,22 +168,22 @@ export const ChipCard: React.FC<ChipCardProps> = ({
       </div>
 
       {/* 2. 左右兩排外伸針腳 (Right Side: 4 dots in micro mode, 4 bars in normal mode) */}
-      <div className="absolute right-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-start pointer-events-none z-10">
+      <div className="absolute right-0 top-[12%] bottom-[12%] w-[8%] flex flex-col justify-evenly items-start pointer-events-none z-20">
         {numberOnly ? (
           [0, 1, 2, 3].map((i) => (
             <div
               key={`dot-r-${i}`}
-              className="w-1 h-1 rounded-full -translate-x-[0.5px] bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
+              className="w-1.5 h-1.5 rounded-full -translate-x-[1.5px] bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.7)]"
             />
           ))
         ) : (
           <>
-            {/* Auto-responsive micro (<46px): 4 dots clinging tightly to edge */}
+            {/* Auto-responsive micro (<46px): 4 dots embedded 30% into chip edge */}
             <div className="flex @[46px]:hidden flex-col justify-evenly items-start w-full h-full">
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={`c-dot-r-${i}`}
-                  className="w-1 h-1 rounded-full -translate-x-[0.5px] bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.6)]"
+                  className="w-1.5 h-1.5 rounded-full -translate-x-[1.5px] bg-gradient-to-l from-amber-200 via-slate-100 to-amber-300 border border-slate-800 shadow-[0_0_2px_rgba(251,191,36,0.7)]"
                 />
               ))}
             </div>
