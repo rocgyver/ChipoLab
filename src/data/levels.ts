@@ -3467,6 +3467,625 @@ export const LEVELS: VerifiedLevelData[] = [
     "hint": "15×15 巨型反應爐核心！雙對角蟲洞形成高速能量迴廊。將低階晶片推至走廊作為攔截墊腳石，一步步引導高階處理器在核心熔合為 Titan 超級電腦！"
   },
   {
+    "id": 106,
+    "fabIndex": 6,
+    "chapter": 0,
+    "chapterName": "Level.0：極限挑戰工廠",
+    "title": "Fab.6 - 自製實驗大樓關卡",
+    "subtitle": "15×15 實驗大樓矩陣 · 24顆晶片連鎖對撞 · 蟲洞與環形穿越合成 Titan 超級電腦",
+    "width": 15,
+    "height": 15,
+    "playerStart": {
+      "x": 0,
+      "y": 0
+    },
+    "targetLevel": 8,
+    "parMoves": 25,
+    "wraparound": true,
+    "grid": [
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "WALL",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ],
+      [
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY",
+        "EMPTY"
+      ]
+    ],
+    "chips": [
+      {
+        "x": 11,
+        "y": 4,
+        "level": 4
+      },
+      {
+        "x": 11,
+        "y": 9,
+        "level": 5
+      },
+      {
+        "x": 13,
+        "y": 4,
+        "level": 2
+      },
+      {
+        "x": 11,
+        "y": 7,
+        "level": 7
+      },
+      {
+        "x": 5,
+        "y": 9,
+        "level": 4
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "level": 1
+      },
+      {
+        "x": 13,
+        "y": 14,
+        "level": 2
+      },
+      {
+        "x": 9,
+        "y": 14,
+        "level": 1
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "level": 1
+      },
+      {
+        "x": 6,
+        "y": 13,
+        "level": 1
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "level": 2
+      },
+      {
+        "x": 1,
+        "y": 7,
+        "level": 1
+      },
+      {
+        "x": 1,
+        "y": 11,
+        "level": 1
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "level": 3
+      },
+      {
+        "x": 11,
+        "y": 1,
+        "level": 2
+      },
+      {
+        "x": 3,
+        "y": 14,
+        "level": 2
+      },
+      {
+        "x": 8,
+        "y": 9,
+        "level": 3
+      },
+      {
+        "x": 8,
+        "y": 2,
+        "level": 2
+      },
+      {
+        "x": 13,
+        "y": 11,
+        "level": 1
+      },
+      {
+        "x": 9,
+        "y": 5,
+        "level": 1
+      },
+      {
+        "x": 14,
+        "y": 2,
+        "level": 1
+      },
+      {
+        "x": 14,
+        "y": 9,
+        "level": 1
+      },
+      {
+        "x": 9,
+        "y": 11,
+        "level": 1
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "level": 1
+      }
+    ],
+    "wormholes": [
+      {
+        "id": 1,
+        "a": {
+          "x": 6,
+          "y": 4
+        },
+        "b": {
+          "x": 9,
+          "y": 9
+        }
+      }
+    ],
+    "solutionSteps": [
+      {
+        "standX": 5,
+        "standY": 8,
+        "dir": "UP",
+        "chipX": 5,
+        "chipY": 7,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 8,
+        "standY": 11,
+        "dir": "RIGHT",
+        "chipX": 9,
+        "chipY": 11,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 14,
+        "standY": 8,
+        "dir": "DOWN",
+        "chipX": 14,
+        "chipY": 9,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 0,
+        "standY": 2,
+        "dir": "LEFT",
+        "chipX": 14,
+        "chipY": 2,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 10,
+        "standY": 5,
+        "dir": "LEFT",
+        "chipX": 9,
+        "chipY": 5,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 12,
+        "dir": "UP",
+        "chipX": 13,
+        "chipY": 11,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 8,
+        "standY": 3,
+        "dir": "UP",
+        "chipX": 8,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 7,
+        "standY": 9,
+        "dir": "RIGHT",
+        "chipX": 8,
+        "chipY": 9,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 4,
+        "standY": 14,
+        "dir": "LEFT",
+        "chipX": 3,
+        "chipY": 14,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 1,
+        "dir": "LEFT",
+        "chipX": 11,
+        "chipY": 1,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 4,
+        "dir": "LEFT",
+        "chipX": 1,
+        "chipY": 4,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 1,
+        "standY": 12,
+        "dir": "UP",
+        "chipX": 1,
+        "chipY": 11,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 1,
+        "standY": 6,
+        "dir": "DOWN",
+        "chipX": 1,
+        "chipY": 7,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 1,
+        "dir": "LEFT",
+        "chipX": 1,
+        "chipY": 1,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 12,
+        "dir": "DOWN",
+        "chipX": 6,
+        "chipY": 13,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 6,
+        "dir": "UP",
+        "chipX": 6,
+        "chipY": 5,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 10,
+        "standY": 14,
+        "dir": "LEFT",
+        "chipX": 9,
+        "chipY": 14,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 13,
+        "dir": "DOWN",
+        "chipX": 13,
+        "chipY": 14,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 5,
+        "standY": 2,
+        "dir": "UP",
+        "chipX": 5,
+        "chipY": 1,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 4,
+        "standY": 9,
+        "dir": "RIGHT",
+        "chipX": 5,
+        "chipY": 9,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 9,
+        "dir": "LEFT",
+        "chipX": 11,
+        "chipY": 9,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 14,
+        "standY": 4,
+        "dir": "LEFT",
+        "chipX": 13,
+        "chipY": 4,
+        "chipLevel": 6,
+        "merged": true
+      },
+      {
+        "standX": 11,
+        "standY": 5,
+        "dir": "UP",
+        "chipX": 11,
+        "chipY": 4,
+        "chipLevel": 7,
+        "merged": true
+      }
+    ],
+    "hint": "實驗大樓矩陣關卡！運用蟲洞與周遭牆壁引導晶片連鎖撞擊，逐步合成終極 Titan 超級電腦！"
+  },
+  {
     "id": 1,
     "chapter": 1,
     "chapterName": "Level.1：基礎合成室",
