@@ -282,7 +282,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           const renderChipElement = (px: number, py: number, cloneIdx?: number) => (
             <div
               key={cloneIdx !== undefined ? `${chip.id}-clone-${cloneIdx}` : chip.id}
-              className={`absolute z-20 ${
+              className={`absolute z-20 overflow-visible ${
                 chip.noTransition
                   ? 'transition-none'
                   : 'transition-all duration-140 ease-out'
