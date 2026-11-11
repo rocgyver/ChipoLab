@@ -25,12 +25,24 @@ export const ChipCard: React.FC<ChipCardProps> = ({
 
   const isSupercomputer = level === 8;
   const isQuantum = level === 7;
+  const isPushable = pushableDirections.length > 0;
+
+  const handleChipClick = (e: React.MouseEvent) => {
+    if (isPushable && onDirectPush) {
+      e.stopPropagation();
+      onDirectPush(pushableDirections[0]);
+    }
+  };
 
   return (
     <div
+      onClick={isPushable ? handleChipClick : undefined}
       className={`@container relative w-full h-full select-none flex items-center justify-center p-0.5 ${
+        isPushable ? 'cursor-pointer' : ''
+      } ${
         isMerging ? 'scale-110 transition-transform duration-150' : ''
       }`}
+      title={isPushable ? `點擊晶片向${pushableDirections[0] === 'UP' ? '上' : pushableDirections[0] === 'DOWN' ? '下' : pushableDirections[0] === 'LEFT' ? '左' : '右'}推動` : undefined}
     >
       {/* Chip Package Wrapper: Centered at 80% to give ~2px margin from tile boundaries */}
       <div className="relative w-[80%] h-full flex items-center justify-center">
