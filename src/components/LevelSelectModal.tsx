@@ -22,7 +22,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   });
 
   const chapters = [
-    { id: 0, name: 'Level.0：極限挑戰工廠', range: 'Fab.0-5', minStarsToUnlock: 0 },
+    { id: 0, name: 'Level.0：極限挑戰工廠', range: 'Fab.0-6', minStarsToUnlock: 0 },
     { id: 1, name: 'Level.1：基礎合成室', range: 'Lab.1-6', minStarsToUnlock: 0 },
     { id: 2, name: 'Level.2：電路迴廊', range: 'Lab.7-12', minStarsToUnlock: 6 },
     { id: 3, name: 'Level.3：多階處理器', range: 'Lab.13-18', minStarsToUnlock: 18 },
@@ -109,7 +109,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 }`}
               >
                 {/* Top Row: Level number & Target chip mini icon */}
-                <div className="flex items-center justify-between w-full mb-1">
+                <div className="flex items-center justify-between w-full mb-1.5">
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs font-mono font-bold text-emerald-400">
                       {lvl.chapter === 0 ? `Fab.${lvl.fabIndex ?? lvl.id}` : `Lab.${lvl.id}`}
@@ -133,12 +133,12 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 </div>
 
                 {/* Level Title */}
-                <h4 className="text-sm font-bold text-white tracking-tight truncate w-full mb-1">
+                <h4 className="text-sm font-bold text-white tracking-tight line-clamp-1 w-full mb-1" title={lvl.title}>
                   {lvl.title}
                 </h4>
 
                 {/* Par info & Subtitle */}
-                <p className="text-[11px] text-slate-400 line-clamp-1 mb-2">
+                <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed mb-2" title={lvl.subtitle}>
                   {lvl.subtitle}
                 </p>
 

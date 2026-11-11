@@ -628,11 +628,11 @@ export const LEVELS: VerifiedLevelData[] = [
     "width": 15,
     "height": 15,
     "playerStart": {
-      "x": 1,
-      "y": 1
+      "x": 2,
+      "y": 8
     },
     "targetLevel": 7,
-    "parMoves": 23,
+    "parMoves": 19,
     "grid": [
       [
         "WALL",
@@ -906,84 +906,54 @@ export const LEVELS: VerifiedLevelData[] = [
     "wraparound": false,
     "chips": [
       {
-        "x": 7,
+        "x": 9,
         "y": 7,
+        "level": 1
+      },
+      {
+        "x": 2,
+        "y": 7,
+        "level": 3
+      },
+      {
+        "x": 9,
+        "y": 12,
         "level": 4
       },
       {
-        "x": 3,
-        "y": 7,
-        "level": 3
+        "x": 2,
+        "y": 12,
+        "level": 4
       },
       {
-        "x": 3,
-        "y": 6,
-        "level": 3
-      },
-      {
-        "x": 5,
-        "y": 7,
-        "level": 3
-      },
-      {
-        "x": 8,
-        "y": 7,
-        "level": 2
-      },
-      {
-        "x": 3,
-        "y": 8,
+        "x": 9,
+        "y": 2,
         "level": 3
       },
       {
         "x": 2,
-        "y": 8,
-        "level": 2
+        "y": 2,
+        "level": 3
       },
       {
-        "x": 5,
+        "x": 12,
+        "y": 12,
+        "level": 3
+      },
+      {
+        "x": 12,
         "y": 4,
-        "level": 3
+        "level": 2
       },
       {
-        "x": 2,
-        "y": 6,
-        "level": 4
-      },
-      {
-        "x": 2,
+        "x": 12,
         "y": 10,
         "level": 1
       },
       {
-        "x": 2,
-        "y": 11,
-        "level": 1
-      },
-      {
         "x": 4,
-        "y": 6,
-        "level": 2
-      },
-      {
-        "x": 5,
-        "y": 6,
-        "level": 2
-      },
-      {
-        "x": 5,
-        "y": 3,
-        "level": 2
-      },
-      {
-        "x": 5,
-        "y": 9,
-        "level": 3
-      },
-      {
-        "x": 2,
         "y": 7,
-        "level": 3
+        "level": 2
       },
       {
         "x": 5,
@@ -991,189 +961,219 @@ export const LEVELS: VerifiedLevelData[] = [
         "level": 2
       },
       {
-        "x": 8,
-        "y": 3,
-        "level": 2
+        "x": 5,
+        "y": 12,
+        "level": 1
       },
       {
-        "x": 6,
-        "y": 11,
-        "level": 2
-      },
-      {
-        "x": 8,
+        "x": 5,
         "y": 5,
+        "level": 1
+      },
+      {
+        "x": 12,
+        "y": 2,
+        "level": 3
+      },
+      {
+        "x": 12,
+        "y": 6,
+        "level": 1
+      },
+      {
+        "x": 4,
+        "y": 10,
         "level": 2
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "level": 3
+      },
+      {
+        "x": 9,
+        "y": 10,
+        "level": 2
+      },
+      {
+        "x": 9,
+        "y": 4,
+        "level": 1
+      },
+      {
+        "x": 2,
+        "y": 9,
+        "level": 4
       }
     ],
     "solutionSteps": [
       {
-        "standX": 8,
-        "standY": 4,
-        "dir": "DOWN",
-        "chipX": 8,
-        "chipY": 5,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 7,
-        "standY": 11,
-        "dir": "LEFT",
-        "chipX": 6,
-        "chipY": 11,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 2,
-        "dir": "DOWN",
-        "chipX": 8,
-        "chipY": 3,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 1,
-        "dir": "DOWN",
-        "chipX": 5,
-        "chipY": 2,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 1,
-        "standY": 7,
-        "dir": "RIGHT",
-        "chipX": 2,
-        "chipY": 7,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 10,
-        "dir": "UP",
-        "chipX": 5,
-        "chipY": 9,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 2,
-        "dir": "DOWN",
-        "chipX": 5,
-        "chipY": 3,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 6,
-        "dir": "LEFT",
-        "chipX": 5,
-        "chipY": 6,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 6,
-        "dir": "LEFT",
-        "chipX": 4,
-        "chipY": 6,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
         "standX": 2,
-        "standY": 12,
-        "dir": "UP",
-        "chipX": 2,
-        "chipY": 11,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 2,
-        "standY": 11,
-        "dir": "UP",
-        "chipX": 2,
-        "chipY": 10,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 1,
-        "standY": 6,
-        "dir": "RIGHT",
-        "chipX": 2,
-        "chipY": 6,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 3,
-        "dir": "DOWN",
-        "chipX": 5,
-        "chipY": 4,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 1,
         "standY": 8,
-        "dir": "RIGHT",
+        "dir": "DOWN",
         "chipX": 2,
-        "chipY": 8,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 3,
-        "standY": 9,
-        "dir": "UP",
-        "chipX": 3,
-        "chipY": 8,
+        "chipY": 9,
         "chipLevel": 4,
         "merged": true
       },
       {
         "standX": 9,
-        "standY": 7,
-        "dir": "LEFT",
-        "chipX": 8,
-        "chipY": 7,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 4,
-        "standY": 7,
-        "dir": "RIGHT",
-        "chipX": 5,
-        "chipY": 7,
-        "chipLevel": 5,
-        "merged": true
-      },
-      {
-        "standX": 3,
-        "standY": 5,
+        "standY": 3,
         "dir": "DOWN",
-        "chipX": 3,
-        "chipY": 6,
-        "chipLevel": 5,
+        "chipX": 9,
+        "chipY": 4,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 11,
+        "dir": "UP",
+        "chipX": 9,
+        "chipY": 10,
+        "chipLevel": 2,
         "merged": true
       },
       {
         "standX": 2,
+        "standY": 3,
+        "dir": "DOWN",
+        "chipX": 2,
+        "chipY": 4,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 4,
+        "standY": 11,
+        "dir": "UP",
+        "chipX": 4,
+        "chipY": 10,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 5,
+        "dir": "DOWN",
+        "chipX": 12,
+        "chipY": 6,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 2,
+        "dir": "LEFT",
+        "chipX": 12,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 5,
+        "standY": 4,
+        "dir": "DOWN",
+        "chipX": 5,
+        "chipY": 5,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 5,
+        "standY": 13,
+        "dir": "UP",
+        "chipX": 5,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 2,
+        "dir": "LEFT",
+        "chipX": 5,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 3,
         "standY": 7,
         "dir": "RIGHT",
-        "chipX": 3,
+        "chipX": 4,
+        "chipY": 7,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 11,
+        "dir": "UP",
+        "chipX": 12,
+        "chipY": 10,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 3,
+        "dir": "DOWN",
+        "chipX": 12,
+        "chipY": 4,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 12,
+        "dir": "LEFT",
+        "chipX": 12,
+        "chipY": 12,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 1,
+        "dir": "DOWN",
+        "chipX": 2,
+        "chipY": 2,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 1,
+        "dir": "DOWN",
+        "chipX": 9,
+        "chipY": 2,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 13,
+        "dir": "UP",
+        "chipX": 2,
+        "chipY": 12,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 13,
+        "dir": "UP",
+        "chipX": 9,
+        "chipY": 12,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 1,
+        "standY": 7,
+        "dir": "RIGHT",
+        "chipX": 2,
         "chipY": 7,
         "chipLevel": 6,
         "merged": true
@@ -1191,11 +1191,11 @@ export const LEVELS: VerifiedLevelData[] = [
     "width": 15,
     "height": 15,
     "playerStart": {
-      "x": 1,
-      "y": 1
+      "x": 13,
+      "y": 9
     },
     "targetLevel": 7,
-    "parMoves": 23,
+    "parMoves": 19,
     "grid": [
       [
         "WALL",
@@ -1480,275 +1480,275 @@ export const LEVELS: VerifiedLevelData[] = [
     "wraparound": false,
     "chips": [
       {
-        "x": 7,
-        "y": 7,
-        "level": 4
-      },
-      {
-        "x": 7,
-        "y": 8,
-        "level": 4
-      },
-      {
-        "x": 8,
-        "y": 8,
-        "level": 2
-      },
-      {
-        "x": 8,
-        "y": 7,
-        "level": 1
-      },
-      {
-        "x": 8,
-        "y": 4,
-        "level": 3
-      },
-      {
-        "x": 8,
-        "y": 6,
-        "level": 1
-      },
-      {
-        "x": 6,
-        "y": 7,
-        "level": 3
-      },
-      {
-        "x": 8,
+        "x": 9,
         "y": 9,
-        "level": 1
+        "level": 3
       },
       {
         "x": 9,
-        "y": 9,
-        "level": 1
+        "y": 2,
+        "level": 3
       },
       {
-        "x": 10,
-        "y": 8,
-        "level": 1
+        "x": 3,
+        "y": 2,
+        "level": 2
       },
       {
-        "x": 7,
-        "y": 9,
-        "level": 1
-      },
-      {
-        "x": 6,
-        "y": 6,
-        "level": 1
-      },
-      {
-        "x": 7,
-        "y": 6,
+        "x": 11,
+        "y": 2,
         "level": 4
       },
       {
         "x": 4,
-        "y": 8,
-        "level": 3
+        "y": 12,
+        "level": 2
       },
       {
-        "x": 9,
-        "y": 7,
-        "level": 1
-      },
-      {
-        "x": 11,
-        "y": 8,
-        "level": 1
-      },
-      {
-        "x": 6,
-        "y": 8,
+        "x": 2,
+        "y": 9,
         "level": 4
       },
       {
-        "x": 5,
+        "x": 2,
+        "y": 4,
+        "level": 1
+      },
+      {
+        "x": 2,
+        "y": 11,
+        "level": 3
+      },
+      {
+        "x": 12,
+        "y": 4,
+        "level": 2
+      },
+      {
+        "x": 12,
         "y": 7,
+        "level": 1
+      },
+      {
+        "x": 9,
+        "y": 12,
+        "level": 2
+      },
+      {
+        "x": 5,
+        "y": 9,
+        "level": 3
+      },
+      {
+        "x": 5,
+        "y": 4,
         "level": 3
       },
       {
         "x": 9,
+        "y": 6,
+        "level": 3
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "level": 3
+      },
+      {
+        "x": 11,
+        "y": 12,
+        "level": 2
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "level": 2
+      },
+      {
+        "x": 6,
         "y": 11,
         "level": 1
       },
       {
-        "x": 3,
-        "y": 8,
+        "x": 6,
+        "y": 6,
+        "level": 1
+      },
+      {
+        "x": 12,
+        "y": 9,
         "level": 3
       }
     ],
     "solutionSteps": [
       {
-        "standX": 2,
-        "standY": 8,
+        "standX": 13,
+        "standY": 9,
+        "dir": "LEFT",
+        "chipX": 12,
+        "chipY": 9,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 5,
+        "dir": "DOWN",
+        "chipX": 6,
+        "chipY": 6,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 12,
+        "dir": "UP",
+        "chipX": 6,
+        "chipY": 11,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 5,
+        "standY": 2,
         "dir": "RIGHT",
-        "chipX": 3,
-        "chipY": 8,
+        "chipX": 6,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 10,
+        "standY": 12,
+        "dir": "RIGHT",
+        "chipX": 11,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 1,
+        "standY": 6,
+        "dir": "RIGHT",
+        "chipX": 2,
+        "chipY": 6,
         "chipLevel": 3,
         "merged": true
       },
       {
         "standX": 9,
-        "standY": 12,
+        "standY": 7,
         "dir": "UP",
         "chipX": 9,
-        "chipY": 11,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 4,
-        "standY": 7,
-        "dir": "RIGHT",
-        "chipX": 5,
-        "chipY": 7,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 9,
-        "dir": "UP",
-        "chipX": 6,
-        "chipY": 8,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 12,
-        "standY": 8,
-        "dir": "LEFT",
-        "chipX": 11,
-        "chipY": 8,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 10,
-        "standY": 7,
-        "dir": "LEFT",
-        "chipX": 9,
-        "chipY": 7,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 3,
-        "standY": 8,
-        "dir": "RIGHT",
-        "chipX": 4,
-        "chipY": 8,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 7,
-        "standY": 5,
-        "dir": "DOWN",
-        "chipX": 7,
         "chipY": 6,
         "chipLevel": 4,
         "merged": true
       },
       {
         "standX": 5,
-        "standY": 6,
-        "dir": "RIGHT",
-        "chipX": 6,
-        "chipY": 6,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 9,
-        "dir": "RIGHT",
-        "chipX": 7,
-        "chipY": 9,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 11,
-        "standY": 8,
-        "dir": "LEFT",
-        "chipX": 10,
-        "chipY": 8,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 10,
-        "standY": 9,
-        "dir": "LEFT",
-        "chipX": 9,
-        "chipY": 9,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 10,
-        "dir": "UP",
-        "chipX": 8,
-        "chipY": 9,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 7,
-        "dir": "RIGHT",
-        "chipX": 6,
-        "chipY": 7,
-        "chipLevel": 5,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 5,
-        "dir": "DOWN",
-        "chipX": 8,
-        "chipY": 6,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 8,
         "standY": 3,
         "dir": "DOWN",
-        "chipX": 8,
+        "chipX": 5,
         "chipY": 4,
         "chipLevel": 3,
         "merged": true
       },
       {
-        "standX": 8,
-        "standY": 6,
-        "dir": "DOWN",
-        "chipX": 8,
-        "chipY": 7,
+        "standX": 4,
+        "standY": 9,
+        "dir": "RIGHT",
+        "chipX": 5,
+        "chipY": 9,
         "chipLevel": 4,
         "merged": true
       },
       {
-        "standX": 9,
-        "standY": 8,
+        "standX": 10,
+        "standY": 12,
         "dir": "LEFT",
-        "chipX": 8,
-        "chipY": 8,
+        "chipX": 9,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 6,
+        "dir": "DOWN",
+        "chipX": 12,
+        "chipY": 7,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 3,
+        "dir": "DOWN",
+        "chipX": 12,
+        "chipY": 4,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 10,
+        "dir": "DOWN",
+        "chipX": 2,
+        "chipY": 11,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 5,
+        "dir": "UP",
+        "chipX": 2,
+        "chipY": 4,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 1,
+        "standY": 9,
+        "dir": "RIGHT",
+        "chipX": 2,
+        "chipY": 9,
         "chipLevel": 5,
         "merged": true
       },
       {
-        "standX": 7,
-        "standY": 9,
-        "dir": "UP",
-        "chipX": 7,
-        "chipY": 8,
+        "standX": 3,
+        "standY": 12,
+        "dir": "RIGHT",
+        "chipX": 4,
+        "chipY": 12,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 10,
+        "standY": 2,
+        "dir": "RIGHT",
+        "chipX": 11,
+        "chipY": 2,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 4,
+        "standY": 2,
+        "dir": "LEFT",
+        "chipX": 3,
+        "chipY": 2,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 1,
+        "dir": "DOWN",
+        "chipX": 9,
+        "chipY": 2,
         "chipLevel": 6,
         "merged": true
       }
@@ -1765,11 +1765,11 @@ export const LEVELS: VerifiedLevelData[] = [
     "width": 15,
     "height": 15,
     "playerStart": {
-      "x": 1,
-      "y": 1
+      "x": 10,
+      "y": 2
     },
     "targetLevel": 7,
-    "parMoves": 23,
+    "parMoves": 19,
     "grid": [
       [
         "WALL",
@@ -2054,33 +2054,93 @@ export const LEVELS: VerifiedLevelData[] = [
     "wraparound": false,
     "chips": [
       {
-        "x": 7,
-        "y": 7,
-        "level": 3
-      },
-      {
-        "x": 10,
-        "y": 7,
-        "level": 5
-      },
-      {
-        "x": 7,
-        "y": 6,
+        "x": 9,
+        "y": 9,
         "level": 4
       },
       {
         "x": 9,
-        "y": 7,
+        "y": 4,
+        "level": 3
+      },
+      {
+        "x": 9,
+        "y": 12,
         "level": 2
       },
       {
-        "x": 7,
-        "y": 8,
+        "x": 2,
+        "y": 2,
+        "level": 3
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "level": 3
+      },
+      {
+        "x": 12,
+        "y": 4,
+        "level": 3
+      },
+      {
+        "x": 2,
+        "y": 9,
+        "level": 4
+      },
+      {
+        "x": 12,
+        "y": 12,
+        "level": 1
+      },
+      {
+        "x": 2,
+        "y": 11,
         "level": 3
       },
       {
         "x": 6,
-        "y": 8,
+        "y": 9,
+        "level": 2
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "level": 2
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "level": 3
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "level": 2
+      },
+      {
+        "x": 12,
+        "y": 9,
+        "level": 1
+      },
+      {
+        "x": 6,
+        "y": 11,
+        "level": 2
+      },
+      {
+        "x": 9,
+        "y": 7,
+        "level": 3
+      },
+      {
+        "x": 9,
+        "y": 2,
+        "level": 2
+      },
+      {
+        "x": 4,
+        "y": 12,
         "level": 1
       },
       {
@@ -2089,187 +2149,19 @@ export const LEVELS: VerifiedLevelData[] = [
         "level": 3
       },
       {
-        "x": 6,
-        "y": 7,
-        "level": 1
-      },
-      {
-        "x": 9,
-        "y": 8,
-        "level": 4
-      },
-      {
-        "x": 9,
-        "y": 4,
-        "level": 2
-      },
-      {
-        "x": 9,
-        "y": 2,
-        "level": 1
-      },
-      {
-        "x": 6,
-        "y": 6,
-        "level": 1
-      },
-      {
-        "x": 8,
-        "y": 6,
-        "level": 2
-      },
-      {
-        "x": 8,
-        "y": 3,
-        "level": 1
-      },
-      {
-        "x": 6,
-        "y": 12,
-        "level": 1
-      },
-      {
-        "x": 8,
-        "y": 4,
-        "level": 2
-      },
-      {
-        "x": 6,
-        "y": 3,
-        "level": 1
-      },
-      {
-        "x": 8,
-        "y": 7,
-        "level": 2
-      },
-      {
-        "x": 9,
-        "y": 6,
-        "level": 2
-      },
-      {
-        "x": 10,
+        "x": 11,
         "y": 2,
         "level": 1
       }
     ],
     "solutionSteps": [
       {
-        "standX": 11,
+        "standX": 10,
         "standY": 2,
-        "dir": "LEFT",
-        "chipX": 10,
-        "chipY": 2,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 9,
-        "standY": 5,
-        "dir": "DOWN",
-        "chipX": 9,
-        "chipY": 6,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 8,
-        "dir": "UP",
-        "chipX": 8,
-        "chipY": 7,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 3,
         "dir": "RIGHT",
-        "chipX": 6,
-        "chipY": 3,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 5,
-        "dir": "UP",
-        "chipX": 8,
-        "chipY": 4,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 13,
-        "dir": "UP",
-        "chipX": 6,
-        "chipY": 12,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 2,
-        "dir": "DOWN",
-        "chipX": 8,
-        "chipY": 3,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 9,
-        "standY": 6,
-        "dir": "LEFT",
-        "chipX": 8,
-        "chipY": 6,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 5,
-        "dir": "DOWN",
-        "chipX": 6,
-        "chipY": 6,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 9,
-        "standY": 1,
-        "dir": "DOWN",
-        "chipX": 9,
+        "chipX": 11,
         "chipY": 2,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 9,
-        "standY": 3,
-        "dir": "DOWN",
-        "chipX": 9,
-        "chipY": 4,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 9,
-        "standY": 9,
-        "dir": "UP",
-        "chipX": 9,
-        "chipY": 8,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 6,
-        "dir": "DOWN",
-        "chipX": 6,
-        "chipY": 7,
-        "chipLevel": 2,
+        "chipLevel": 1,
         "merged": true
       },
       {
@@ -2282,47 +2174,155 @@ export const LEVELS: VerifiedLevelData[] = [
         "merged": true
       },
       {
-        "standX": 5,
-        "standY": 8,
+        "standX": 3,
+        "standY": 12,
         "dir": "RIGHT",
-        "chipX": 6,
-        "chipY": 8,
+        "chipX": 4,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 1,
+        "dir": "DOWN",
+        "chipX": 9,
+        "chipY": 2,
         "chipLevel": 3,
         "merged": true
       },
       {
-        "standX": 7,
-        "standY": 9,
+        "standX": 9,
+        "standY": 8,
         "dir": "UP",
-        "chipX": 7,
-        "chipY": 8,
+        "chipX": 9,
+        "chipY": 7,
         "chipLevel": 4,
         "merged": true
       },
       {
-        "standX": 8,
-        "standY": 7,
-        "dir": "RIGHT",
-        "chipX": 9,
-        "chipY": 7,
-        "chipLevel": 5,
+        "standX": 6,
+        "standY": 12,
+        "dir": "UP",
+        "chipX": 6,
+        "chipY": 11,
+        "chipLevel": 2,
         "merged": true
       },
       {
-        "standX": 7,
-        "standY": 5,
+        "standX": 12,
+        "standY": 8,
         "dir": "DOWN",
-        "chipX": 7,
+        "chipX": 12,
+        "chipY": 9,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 7,
+        "dir": "UP",
+        "chipX": 6,
         "chipY": 6,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 6,
+        "dir": "UP",
+        "chipX": 2,
+        "chipY": 5,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 6,
+        "standY": 1,
+        "dir": "DOWN",
+        "chipX": 6,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 5,
+        "standY": 9,
+        "dir": "RIGHT",
+        "chipX": 6,
+        "chipY": 9,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 10,
+        "dir": "DOWN",
+        "chipX": 2,
+        "chipY": 11,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 12,
+        "dir": "LEFT",
+        "chipX": 12,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 8,
+        "dir": "DOWN",
+        "chipX": 2,
+        "chipY": 9,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 4,
+        "dir": "LEFT",
+        "chipX": 12,
+        "chipY": 4,
         "chipLevel": 5,
         "merged": true
       },
       {
-        "standX": 11,
-        "standY": 7,
-        "dir": "LEFT",
-        "chipX": 10,
-        "chipY": 7,
+        "standX": 3,
+        "standY": 2,
+        "dir": "RIGHT",
+        "chipX": 4,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 1,
+        "standY": 2,
+        "dir": "RIGHT",
+        "chipX": 2,
+        "chipY": 2,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 13,
+        "dir": "UP",
+        "chipX": 9,
+        "chipY": 12,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 3,
+        "dir": "DOWN",
+        "chipX": 9,
+        "chipY": 4,
         "chipLevel": 6,
         "merged": true
       }
@@ -2902,11 +2902,11 @@ export const LEVELS: VerifiedLevelData[] = [
     "width": 15,
     "height": 15,
     "playerStart": {
-      "x": 1,
-      "y": 1
+      "x": 8,
+      "y": 12
     },
     "targetLevel": 8,
-    "parMoves": 23,
+    "parMoves": 19,
     "grid": [
       [
         "WALL",
@@ -3191,195 +3191,267 @@ export const LEVELS: VerifiedLevelData[] = [
     "wraparound": false,
     "chips": [
       {
-        "x": 7,
-        "y": 7,
-        "level": 4
-      },
-      {
-        "x": 7,
-        "y": 5,
-        "level": 7
-      },
-      {
-        "x": 8,
-        "y": 7,
-        "level": 3
-      },
-      {
         "x": 6,
-        "y": 7,
-        "level": 1
-      },
-      {
-        "x": 7,
-        "y": 8,
-        "level": 3
-      },
-      {
-        "x": 2,
-        "y": 8,
-        "level": 1
-      },
-      {
-        "x": 4,
-        "y": 8,
-        "level": 1
-      },
-      {
-        "x": 6,
-        "y": 5,
-        "level": 3
-      },
-      {
-        "x": 6,
-        "y": 4,
+        "y": 6,
         "level": 3
       },
       {
         "x": 6,
         "y": 11,
+        "level": 7
+      },
+      {
+        "x": 12,
+        "y": 6,
+        "level": 5
+      },
+      {
+        "x": 2,
+        "y": 9,
         "level": 2
       },
       {
-        "x": 6,
-        "y": 8,
+        "x": 12,
+        "y": 9,
+        "level": 4
+      },
+      {
+        "x": 12,
+        "y": 11,
+        "level": 2
+      },
+      {
+        "x": 2,
+        "y": 6,
         "level": 1
       },
       {
-        "x": 8,
+        "x": 12,
+        "y": 3,
+        "level": 1
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "level": 3
+      },
+      {
+        "x": 4,
+        "y": 12,
+        "level": 1
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "level": 3
+      },
+      {
+        "x": 10,
+        "y": 12,
+        "level": 1
+      },
+      {
+        "x": 10,
+        "y": 2,
+        "level": 1
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "level": 1
+      },
+      {
+        "x": 9,
         "y": 6,
         "level": 4
       },
       {
-        "x": 9,
-        "y": 7,
-        "level": 4
-      },
-      {
-        "x": 5,
-        "y": 11,
-        "level": 2
-      },
-      {
-        "x": 4,
+        "x": 2,
         "y": 11,
         "level": 1
-      },
-      {
-        "x": 8,
-        "y": 8,
-        "level": 3
-      },
-      {
-        "x": 12,
-        "y": 4,
-        "level": 1
-      },
-      {
-        "x": 5,
-        "y": 7,
-        "level": 1
-      },
-      {
-        "x": 8,
-        "y": 3,
-        "level": 4
       },
       {
         "x": 6,
         "y": 9,
+        "level": 3
+      },
+      {
+        "x": 2,
+        "y": 4,
         "level": 1
+      },
+      {
+        "x": 8,
+        "y": 2,
+        "level": 2
+      },
+      {
+        "x": 8,
+        "y": 11,
+        "level": 2
       }
     ],
     "solutionSteps": [
+      {
+        "standX": 8,
+        "standY": 12,
+        "dir": "UP",
+        "chipX": 8,
+        "chipY": 11,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 9,
+        "standY": 2,
+        "dir": "LEFT",
+        "chipX": 8,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 3,
+        "dir": "DOWN",
+        "chipX": 2,
+        "chipY": 4,
+        "chipLevel": 1,
+        "merged": true
+      },
       {
         "standX": 6,
         "standY": 10,
         "dir": "UP",
         "chipX": 6,
         "chipY": 9,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 2,
-        "dir": "DOWN",
-        "chipX": 8,
-        "chipY": 3,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 4,
-        "standY": 7,
-        "dir": "RIGHT",
-        "chipX": 5,
-        "chipY": 7,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 12,
-        "standY": 3,
-        "dir": "DOWN",
-        "chipX": 12,
-        "chipY": 4,
-        "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 8,
-        "standY": 9,
-        "dir": "UP",
-        "chipX": 8,
-        "chipY": 8,
         "chipLevel": 3,
         "merged": true
       },
       {
-        "standX": 4,
-        "standY": 12,
-        "dir": "UP",
-        "chipX": 4,
+        "standX": 2,
+        "standY": 10,
+        "dir": "DOWN",
+        "chipX": 2,
         "chipY": 11,
         "chipLevel": 1,
-        "merged": true
-      },
-      {
-        "standX": 4,
-        "standY": 11,
-        "dir": "RIGHT",
-        "chipX": 5,
-        "chipY": 11,
-        "chipLevel": 2,
         "merged": true
       },
       {
         "standX": 10,
-        "standY": 7,
+        "standY": 6,
         "dir": "LEFT",
         "chipX": 9,
-        "chipY": 7,
+        "chipY": 6,
         "chipLevel": 4,
         "merged": true
       },
       {
-        "standX": 8,
-        "standY": 5,
+        "standX": 4,
+        "standY": 4,
         "dir": "DOWN",
-        "chipX": 8,
-        "chipY": 6,
-        "chipLevel": 5,
+        "chipX": 4,
+        "chipY": 5,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 10,
+        "standY": 1,
+        "dir": "DOWN",
+        "chipX": 10,
+        "chipY": 2,
+        "chipLevel": 1,
+        "merged": true
+      },
+      {
+        "standX": 11,
+        "standY": 12,
+        "dir": "LEFT",
+        "chipX": 10,
+        "chipY": 12,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 4,
+        "standY": 2,
+        "dir": "LEFT",
+        "chipX": 3,
+        "chipY": 2,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 3,
+        "standY": 12,
+        "dir": "RIGHT",
+        "chipX": 4,
+        "chipY": 12,
+        "chipLevel": 4,
         "merged": true
       },
       {
         "standX": 6,
-        "standY": 9,
-        "dir": "UP",
+        "standY": 1,
+        "dir": "DOWN",
         "chipX": 6,
-        "chipY": 8,
+        "chipY": 2,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 4,
+        "dir": "UP",
+        "chipX": 12,
+        "chipY": 3,
         "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 7,
+        "dir": "UP",
+        "chipX": 2,
+        "chipY": 6,
+        "chipLevel": 2,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 10,
+        "dir": "DOWN",
+        "chipX": 12,
+        "chipY": 11,
+        "chipLevel": 3,
+        "merged": true
+      },
+      {
+        "standX": 12,
+        "standY": 8,
+        "dir": "DOWN",
+        "chipX": 12,
+        "chipY": 9,
+        "chipLevel": 4,
+        "merged": true
+      },
+      {
+        "standX": 2,
+        "standY": 10,
+        "dir": "UP",
+        "chipX": 2,
+        "chipY": 9,
+        "chipLevel": 5,
+        "merged": true
+      },
+      {
+        "standX": 13,
+        "standY": 6,
+        "dir": "LEFT",
+        "chipX": 12,
+        "chipY": 6,
+        "chipLevel": 6,
         "merged": true
       },
       {
@@ -3388,78 +3460,6 @@ export const LEVELS: VerifiedLevelData[] = [
         "dir": "UP",
         "chipX": 6,
         "chipY": 11,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 3,
-        "dir": "DOWN",
-        "chipX": 6,
-        "chipY": 4,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 6,
-        "standY": 4,
-        "dir": "DOWN",
-        "chipX": 6,
-        "chipY": 5,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 8,
-        "dir": "LEFT",
-        "chipX": 4,
-        "chipY": 8,
-        "chipLevel": 2,
-        "merged": true
-      },
-      {
-        "standX": 1,
-        "standY": 8,
-        "dir": "RIGHT",
-        "chipX": 2,
-        "chipY": 8,
-        "chipLevel": 3,
-        "merged": true
-      },
-      {
-        "standX": 7,
-        "standY": 9,
-        "dir": "UP",
-        "chipX": 7,
-        "chipY": 8,
-        "chipLevel": 4,
-        "merged": true
-      },
-      {
-        "standX": 5,
-        "standY": 7,
-        "dir": "RIGHT",
-        "chipX": 6,
-        "chipY": 7,
-        "chipLevel": 5,
-        "merged": true
-      },
-      {
-        "standX": 9,
-        "standY": 7,
-        "dir": "LEFT",
-        "chipX": 8,
-        "chipY": 7,
-        "chipLevel": 6,
-        "merged": true
-      },
-      {
-        "standX": 7,
-        "standY": 4,
-        "dir": "DOWN",
-        "chipX": 7,
-        "chipY": 5,
         "chipLevel": 7,
         "merged": true
       }
